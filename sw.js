@@ -1,5 +1,5 @@
-// ACE Field SOPs service worker. Built 1a80c42cff73.
-const SHELL = "ace-shell-1a80c42cff73";
+// ACE Field SOPs service worker. Built 2046664a3aa6.
+const SHELL = "ace-shell-2046664a3aa6";
 const AUDIO = "ace-audio-20f2e33153";
 const FONTS = "ace-fonts";
 const CORE = ["./", "index.html", "data.enc", "access.json", "manifest.webmanifest",

@@ -188,6 +188,16 @@ svg { display: block; }
 .order .tx { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
 .order .ic { flex: none; width: 44px; height: 44px; border-radius: 50%; background: var(--red-soft); color: var(--red-text); display: grid; place-items: center; }
 
+/* install card (web app only) */
+.inst { background: var(--surface); border: 1.5px solid var(--red-text); border-radius: 12px; padding: 14px; display: flex; flex-direction: column; gap: 10px; text-align: left; }
+.inst h2 { font-family: var(--font-display); font-weight: 700; font-size: 22px; line-height: 1.1; }
+.inst p { color: var(--muted); font-size: 15.5px; line-height: 1.4; }
+.inst ol { display: flex; flex-direction: column; gap: 8px; font-size: 16.5px; font-weight: 500; }
+.inst ol li { display: flex; align-items: center; gap: 10px; }
+.inst ol .n { flex: none; width: 26px; height: 26px; border-radius: 50%; background: var(--ink); color: var(--bg); display: grid; place-items: center; font-weight: 700; font-size: 14px; }
+.inst ol svg { flex: none; color: var(--red-text); }
+.inst .later { align-self: center; min-height: 44px; padding: 0 12px; border: 0; background: none; color: var(--muted); font-size: 15px; text-decoration: underline; }
+
 /* crew code */
 .lock-in { max-width: 440px; padding-block: 18px 40px; display: flex; flex-direction: column; gap: 14px; }
 .lock-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
@@ -271,7 +281,9 @@ body.has-player .parts, body.has-player .home-list { padding-bottom: 190px; }
       codeCant: "The code can't be changed from this screen. Ask Claude to change it.",
       offTitle: "No signal?", offLead: "Save the English audio on this phone to listen with no signal. About {mb} MB.",
       offSave: "Save audio", offSaving: "Saving {n} of {t}…", offDone: "The English audio is saved on this phone.",
-      offFail: "Not everything was saved. Check your connection and try again."
+      offFail: "Not everything was saved. Check your connection and try again.",
+      instTitle: "Install the app", instLead: "Put ACE SOPs on your home screen. It opens like an app and works with no signal.",
+      instBtn: "Install", instIos1: "Tap the Share button", instIos2: "Tap “Add to Home Screen”", instIos3: "Open ACE SOPs from your home screen", instLater: "Not now"
     },
     es: {
       title: "Procedimientos", lead: "Lea o escuche el procedimiento antes de ir al trabajo.",
@@ -290,7 +302,9 @@ body.has-player .parts, body.has-player .home-list { padding-bottom: 190px; }
       codeCant: "El código no se puede cambiar desde esta pantalla. Pida a Claude que lo cambie.",
       offTitle: "¿Sin señal?", offLead: "Guarde el audio en español en este teléfono para escuchar sin señal. Unos {mb} MB.",
       offSave: "Guardar audio", offSaving: "Guardando {n} de {t}…", offDone: "El audio en español está guardado en este teléfono.",
-      offFail: "No se guardó todo. Revise su conexión e intente otra vez."
+      offFail: "No se guardó todo. Revise su conexión e intente otra vez.",
+      instTitle: "Instalar la app", instLead: "Ponga ACE SOPs en su pantalla de inicio. Abre como una app y funciona sin señal.",
+      instBtn: "Instalar", instIos1: "Toque el botón Compartir", instIos2: "Toque «Agregar a inicio»", instIos3: "Abra ACE SOPs desde su pantalla de inicio", instLater: "Ahora no"
     }
   };
   var ICON = {
@@ -522,11 +536,34 @@ body.has-player .parts, body.has-player .home-list { padding-bottom: 190px; }
       .catch(function () { o.busy = false; o.fail = true; paintOff(); });
   }
 
+  /* ---------- web app only: offer to install on the home screen ---------- */
+  var installEvt = null, installed = false, noInstall = store("sop-noinstall") === "1";
+  try { installed = (window.matchMedia && matchMedia("(display-mode: standalone)").matches) || navigator.standalone === true; } catch (e) {}
+  var IOS = /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+  var SHARE = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V3M8 7l4-4 4 4M7 11H6a1.5 1.5 0 0 0-1.5 1.5v7A1.5 1.5 0 0 0 6 21h12a1.5 1.5 0 0 0 1.5-1.5v-7A1.5 1.5 0 0 0 18 11h-1"/></svg>';
+  function instInner() {
+    if (!WEBAPP || installed || noInstall) return "";
+    var t = T[lang], h = '<div class="inst"><h2>' + t.instTitle + '</h2><p>' + t.instLead + '</p>';
+    if (installEvt) h += '<button type="button" class="btn-main" data-install="1">' + t.instBtn + '</button>';
+    else if (IOS) h += '<ol><li><span class="n">1</span><span>' + t.instIos1 + '</span>' + SHARE + '</li><li><span class="n">2</span><span>' + t.instIos2 + '</span></li><li><span class="n">3</span><span>' + t.instIos3 + '</span></li></ol>';
+    else return "";
+    return h + '<button type="button" class="later" data-noinstall="1">' + t.instLater + '</button></div>';
+  }
+  function instWrap() { var i = instInner(); return '<div id="instBox"' + (i ? "" : " hidden") + '>' + i + '</div>'; }
+  function paintInst() { var el = $("instBox"), i = instInner(); if (el) { el.innerHTML = i; el.hidden = !i; } }
+  window.addEventListener("beforeinstallprompt", function (e) { e.preventDefault(); installEvt = e; paintInst(); });
+  window.addEventListener("appinstalled", function () { installEvt = null; installed = true; paintInst(); });
+  function doInstall() {
+    var e = installEvt; if (!e) return;
+    installEvt = null;
+    try { e.prompt(); if (e.userChoice) e.userChoice.then(function (c) { if (c && c.outcome === "accepted") installed = true; paintInst(); }, paintInst); } catch (x) { paintInst(); }
+  }
+
   function renderHome() {
     var t = T[lang], h = "";
     h += '<header class="home-top">' + ceiling() + '<div class="wrap"><div class="brand-row"><div class="brand"><span class="mark">ACE</span><span>ACE Fire LA</span></div>' + langSwitch() + '</div>';
     h += '<h1>' + t.title + '</h1><p class="lead">' + t.lead + '</p>' + draft() + '</div></header>';
-    h += '<main class="wrap home-list">';
+    h += '<main class="wrap home-list">' + instWrap();
     var lastKind = null;
     INDEX.forEach(function (x, n) {
       if (x.kind !== lastKind) { h += '<h2 class="group">' + (x.kind === "test" ? t.tests : t.repairs) + '</h2>'; lastKind = x.kind; }
@@ -581,7 +618,7 @@ body.has-player .parts, body.has-player .home-list { padding-bottom: 190px; }
   function renderLock() {
     var t = T[lang], i, h = '<main class="lock"><div class="wrap lock-in"><div class="lock-top"><div class="brand"><span class="mark">ACE</span><span>ACE Fire LA</span></div>' + langSwitch() + '</div>';
     if (!access && !accessFailed && (store("sop-code") || store("sop-key"))) { app.innerHTML = h + '<p class="state">' + t.opening + '</p></div></main>'; return; }
-    h += '<h1>' + t.lockTitle + '</h1><p class="lead">' + t.lockLead + '</p>';
+    h += instWrap() + '<h1>' + t.lockTitle + '</h1><p class="lead">' + t.lockLead + '</p>';
     if (accessFailed) h += '<p class="lock-msg">' + t.lockFail + '</p><button type="button" class="btn-main" data-retry="1">' + t.retry + '</button>';
     else {
       h += '<div class="pins" id="pins">'; for (i = 0; i < 4; i++) h += '<span class="pin"></span>';
@@ -895,8 +932,10 @@ body.has-player .parts, body.has-player .home-list { padding-bottom: 190px; }
 
   /* ---------- events ---------- */
   document.addEventListener("click", function (e) {
-    var el = e.target.closest ? e.target.closest("[data-lang],[data-play],[data-go],[data-key],[data-retry],[data-off]") : null;
+    var el = e.target.closest ? e.target.closest("[data-lang],[data-play],[data-go],[data-key],[data-retry],[data-off],[data-install],[data-noinstall]") : null;
     if (!el) return;
+    if (el.hasAttribute("data-install")) { doInstall(); return; }
+    if (el.hasAttribute("data-noinstall")) { noInstall = true; store("sop-noinstall", "1"); paintInst(); return; }
     if (el.hasAttribute("data-off")) { saveAudio(lang); return; }
     if (el.hasAttribute("data-key")) { pressKey(el.getAttribute("data-key")); return; }
     if (el.hasAttribute("data-retry")) { loadAccess(); return; }
