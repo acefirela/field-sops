@@ -1,0 +1,951 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>ACE Field SOPs</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#191E21" media="(prefers-color-scheme: dark)">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="ACE SOPs">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="ace-audio-cache" content="ace-audio-20f2e33153">
+<style>:root{color-scheme:light;padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&display=swap">
+<style>
+/* Layout: one phone-width column. Home is a stack of numbered job tags, most common job first.
+   An SOP is a top bar, its parts in reading order, and a player docked at the bottom. */
+:root {
+  --bg: #ECEFF1;        /* galvanized steel grey */
+  --surface: #FFFFFF;
+  --ink: #14181B;
+  --muted: #56616A;
+  --line: #D3D9DD;
+  --red: #B81D2A;       /* riser red: buttons and fills */
+  --on-red: #FFFFFF;
+  --red-text: #B81D2A;  /* red used as text on a surface */
+  --red-soft: #F7E4E5;
+  --tag: #F5C518;       /* out-of-service tag yellow: safety rules only */
+  --tag-ink: #231C00;
+  --font-display: "Barlow Condensed", "Arial Narrow", Arial, sans-serif;
+  --font-body: "Barlow", "Segoe UI", system-ui, -apple-system, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0F1214; --surface: #191E21; --ink: #EDF0F1; --muted: #9BA6AD; --line: #2B3237;
+    --red: #D7323E; --on-red: #FFFFFF; --red-text: #FF7A82; --red-soft: #33191C;
+    --tag: #F5C518; --tag-ink: #231C00; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0F1214; --surface: #191E21; --ink: #EDF0F1; --muted: #9BA6AD; --line: #2B3237;
+  --red: #D7323E; --on-red: #FFFFFF; --red-text: #FF7A82; --red-soft: #33191C;
+  --tag: #F5C518; --tag-ink: #231C00; color-scheme: dark;
+}
+
+html { -webkit-text-size-adjust: 100%; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 17px; line-height: 1.5; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--surface); }
+* { box-sizing: border-box; }
+h1, h2, h3, p, ul, ol { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+button { font: inherit; color: inherit; cursor: pointer; }
+button:focus-visible, a:focus-visible, input:focus-visible { outline: 3px solid var(--red-text); outline-offset: 2px; }
+svg { display: block; }
+
+.wrap { max-width: 680px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+
+/* language switch */
+.lang { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); padding: 3px; flex: none; }
+.lang button { border: 0; background: transparent; border-radius: 999px; min-width: 46px; min-height: 38px; padding: 0 12px; font-weight: 600; font-size: 15px; color: var(--muted); }
+.lang button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+
+/* home */
+.home-top { background: var(--surface); border-bottom: 1px solid var(--line); }
+.home-top .wrap { padding-block: 18px 22px; display: flex; flex-direction: column; gap: 14px; }
+.brand-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 15px; letter-spacing: .02em; }
+.mark { width: 34px; height: 34px; border-radius: 50%; background: var(--red); color: var(--on-red); display: grid; place-items: center; font-family: var(--font-display); font-weight: 700; font-size: 15px; letter-spacing: .03em; }
+.home-top h1 { font-family: var(--font-display); font-weight: 700; font-size: 44px; line-height: 1; text-wrap: balance; }
+.lead { color: var(--muted); max-width: 34em; }
+
+.draft { border: 1.5px dashed var(--muted); border-radius: 10px; padding: 10px 12px; font-size: 15px; line-height: 1.4; color: var(--ink); }
+.draft b { font-family: var(--font-display); font-size: 17px; letter-spacing: .06em; text-transform: uppercase; margin-right: 6px; }
+
+.home-list { padding-block: 18px 40px; display: flex; flex-direction: column; gap: 10px; }
+.group { font-family: var(--font-display); font-weight: 600; font-size: 16px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-top: 8px; }
+.jobtag { display: flex; align-items: center; gap: 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px; text-decoration: none; color: inherit; min-width: 0; }
+.jobtag:active { background: var(--red-soft); }
+.stamp { flex: none; width: 52px; height: 52px; border-radius: 50%; border: 2px solid var(--ink); display: grid; place-items: center; font-family: var(--font-display); font-weight: 700; font-size: 24px; font-variant-numeric: tabular-nums; }
+.jobtag .txt { min-width: 0; flex: 1; display: flex; flex-direction: column; gap: 3px; }
+.jobtag .ttl { font-weight: 600; font-size: 18px; line-height: 1.25; text-wrap: balance; }
+.meta { color: var(--muted); font-size: 14.5px; font-variant-numeric: tabular-nums; }
+.chev { flex: none; color: var(--muted); }
+
+/* SOP view */
+.bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--surface); border-bottom: 1px solid var(--line); }
+.bar .wrap { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding-block: 8px; }
+.back { display: inline-flex; align-items: center; gap: 4px; min-height: 44px; padding: 0 12px 0 6px; border-radius: 999px; text-decoration: none; color: var(--ink); font-weight: 600; font-size: 16px; }
+.sop-head { padding-block: 20px 6px; display: flex; flex-direction: column; gap: 14px; }
+.eyebrow { font-family: var(--font-display); font-weight: 600; font-size: 16px; letter-spacing: .1em; text-transform: uppercase; color: var(--red-text); font-variant-numeric: tabular-nums; }
+.sop-head h1 { font-family: var(--font-display); font-weight: 700; font-size: 38px; line-height: 1.02; text-wrap: balance; }
+.btn-main { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; min-height: 56px; border: 0; border-radius: 12px; background: var(--red); color: var(--on-red); font-weight: 600; font-size: 18px; padding: 10px 16px; }
+.btn-main:active { filter: brightness(.92); }
+.toc { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+.toc button { display: flex; align-items: center; gap: 12px; width: 100%; min-height: 48px; padding: 8px 14px; border: 0; border-top: 1px solid var(--line); background: transparent; text-align: left; }
+.toc li:first-child button { border-top: 0; }
+.toc button.on { background: var(--red-soft); }
+.toc button.on .h { font-weight: 600; }
+.toc .n { flex: none; width: 1.3em; font-family: var(--font-display); font-weight: 700; font-size: 20px; color: var(--red-text); font-variant-numeric: tabular-nums; }
+.toc .h { flex: 1; min-width: 0; font-weight: 500; }
+.toc .d { flex: none; color: var(--muted); font-size: 14.5px; font-variant-numeric: tabular-nums; }
+
+.parts { padding-block: 10px 48px; display: flex; flex-direction: column; gap: 14px; }
+.part { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px; display: flex; flex-direction: column; gap: 14px; scroll-margin-top: calc(env(safe-area-inset-top, 0px) + 72px); min-width: 0; }
+.part.is-playing { border-color: var(--red-text); box-shadow: 0 0 0 1px var(--red-text); }
+.part-head { display: flex; align-items: center; gap: 12px; }
+.part-head .pn { flex: none; font-family: var(--font-display); font-weight: 700; font-size: 34px; line-height: 1; color: var(--red-text); font-variant-numeric: tabular-nums; }
+.part-head h2 { flex: 1; min-width: 0; font-family: var(--font-display); font-weight: 700; font-size: 28px; line-height: 1.05; text-wrap: balance; }
+.listen { flex: none; display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 14px 0 10px; border-radius: 999px; border: 1.5px solid var(--red-text); background: transparent; color: var(--red-text); font-weight: 600; font-size: 15px; }
+.part.is-playing .listen { background: var(--red); border-color: var(--red); color: var(--on-red); }
+.part p { max-width: 65ch; }
+.part h3 { font-family: var(--font-display); font-weight: 600; font-size: 19px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
+.note { background: var(--tag); color: var(--tag-ink); border-radius: 10px; padding: 12px 14px; font-weight: 500; }
+.steps { display: flex; flex-direction: column; gap: 12px; }
+.steps li { display: flex; gap: 12px; align-items: flex-start; }
+.steps .sn { flex: none; width: 30px; height: 30px; border-radius: 50%; background: var(--red-soft); color: var(--red-text); display: grid; place-items: center; font-family: var(--font-display); font-weight: 700; font-size: 18px; font-variant-numeric: tabular-nums; margin-top: 1px; }
+.steps .st { flex: 1; min-width: 0; max-width: 65ch; }
+.dots { display: flex; flex-direction: column; gap: 8px; }
+.dots li { position: relative; padding-left: 20px; max-width: 65ch; }
+.dots li::before { content: ""; position: absolute; left: 4px; top: .62em; width: 7px; height: 7px; background: var(--muted); border-radius: 1px; }
+.fixes { display: flex; flex-direction: column; gap: 10px; }
+.fix { border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; display: flex; flex-direction: column; gap: 6px; }
+.fix .q { font-weight: 600; }
+.fix .a { color: var(--ink); }
+.fix .lbl { display: block; font-family: var(--font-display); font-weight: 600; font-size: 14px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.state { padding-block: 40px; color: var(--muted); text-align: center; }
+
+/* pictures */
+.ceiling { display: block; width: 100%; height: 44px; color: var(--ink); }
+.pipe { fill: var(--red); }
+.ico { flex: none; width: 52px; height: 52px; border-radius: 12px; background: var(--red-soft); color: var(--red-text); display: grid; place-items: center; }
+.no { font-family: var(--font-display); font-weight: 700; font-size: 15px; letter-spacing: .08em; color: var(--muted); font-variant-numeric: tabular-nums; }
+.eyerow { display: flex; align-items: center; gap: 10px; }
+.eyerow .ico { width: 42px; height: 42px; border-radius: 10px; }
+.fig { margin: 0; border: 1px solid var(--line); border-radius: 12px; background: var(--bg); padding: 14px 12px 12px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.fig figcaption { color: var(--muted); font-size: 14.5px; line-height: 1.4; }
+.dia { display: block; width: 100%; height: auto; max-width: 440px; margin: 0 auto; color: var(--ink); }
+.dia .ink { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.dia .solid { fill: currentColor; }
+.dia .body { fill: var(--surface); stroke: currentColor; stroke-width: 2; }
+.dia .hair { fill: none; stroke: var(--muted); stroke-width: 1.5; stroke-dasharray: 4 4; }
+.dia .drip { fill: none; stroke: var(--muted); stroke-width: 2; stroke-linecap: round; }
+.dia .ghost { fill: none; stroke: var(--muted); stroke-width: 2; stroke-dasharray: 3 3; stroke-linecap: round; }
+.dia .onpipe { fill: none; stroke: var(--on-red); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.dia .num circle { fill: var(--ink); }
+.dia .num text { fill: var(--bg); font-family: var(--font-body); font-weight: 700; font-size: 12px; }
+.legend { display: flex; flex-direction: column; gap: 8px; font-size: 15px; line-height: 1.35; }
+.legend li { display: flex; gap: 10px; align-items: flex-start; }
+.legend .ln { flex: none; width: 22px; height: 22px; border-radius: 50%; background: var(--ink); color: var(--bg); display: grid; place-items: center; font-weight: 700; font-size: 12.5px; margin-top: 1px; }
+.tl { display: flex; flex-direction: column; padding-left: 4px; }
+.stop { position: relative; padding: 0 0 18px 34px; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.stop:last-child { padding-bottom: 0; }
+.stop::before { content: ""; position: absolute; top: 2px; left: 0; width: 18px; height: 18px; box-sizing: border-box; border-radius: 50%; background: var(--surface); border: 3px solid var(--ink); z-index: 1; }
+.stop.hot::before { background: var(--red); border-color: var(--red); }
+.stop:not(:last-child)::after { content: ""; position: absolute; top: 12px; bottom: -6px; left: 8px; width: 2px; background: var(--muted); }
+.tl.batt .stop:not(:last-child)::after { left: 5px; width: 8px; background: var(--tag); }
+.stop b, .trio b, .node b, .order b { font-family: var(--font-display); font-weight: 700; font-size: 17.5px; line-height: 1.15; overflow-wrap: break-word; }
+.stop span, .trio span, .node span, .order .tx span { font-size: 14.5px; line-height: 1.3; color: var(--muted); }
+.trio { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; text-align: center; }
+.trio b, .trio span, .node b, .node span { display: block; }
+.flow { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 10px; align-items: stretch; }
+.node { border: 1.5px solid var(--ink); border-radius: 10px; background: var(--surface); padding: 10px 8px; text-align: center; min-width: 0; }
+.node.hot { border-color: var(--red-text); box-shadow: inset 0 0 0 1px var(--red-text); }
+.node.wide, .arr.wide { grid-column: 1 / -1; }
+.arr { display: grid; place-items: center; }
+.arr svg { transform: rotate(90deg); }
+.sigs { display: flex; flex-direction: column; gap: 10px; }
+.sigs li { display: flex; gap: 10px; align-items: flex-start; }
+.sigs .dot { flex: none; width: 16px; height: 16px; border-radius: 50%; margin-top: 4px; }
+.sigs .dot.a { background: var(--red); } .sigs .dot.s { background: var(--tag); } .sigs .dot.t { background: var(--muted); }
+.sigs b { display: block; }
+.visits { display: flex; flex-direction: column; gap: 8px; }
+.visits .row { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.visits .lab { font-weight: 600; }
+.visits .chips { display: flex; gap: 6px; }
+.chip { min-width: 40px; height: 34px; padding: 0 10px; border-radius: 8px; border: 1.5px solid var(--line); color: var(--muted); display: inline-grid; place-items: center; font-family: var(--font-display); font-weight: 700; font-size: 18px; }
+.chip.on { background: var(--ink); border-color: var(--ink); color: var(--bg); }
+.visits .vkey { color: var(--muted); font-size: 14px; }
+.order { display: flex; flex-direction: column; gap: 8px; }
+.order .tile { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; display: flex; align-items: center; gap: 12px; min-width: 0; }
+.order .tx { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.order .ic { flex: none; width: 44px; height: 44px; border-radius: 50%; background: var(--red-soft); color: var(--red-text); display: grid; place-items: center; }
+
+/* crew code */
+.lock-in { max-width: 440px; padding-block: 18px 40px; display: flex; flex-direction: column; gap: 14px; }
+.lock-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.lock h1 { font-family: var(--font-display); font-weight: 700; font-size: 40px; line-height: 1; text-wrap: balance; margin-top: 20px; }
+.pins { display: flex; justify-content: center; gap: 18px; padding-top: 14px; }
+.pin { width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--ink); }
+.pin.on { background: var(--ink); }
+.lock-msg { min-height: 1.5em; text-align: center; color: var(--red-text); font-weight: 500; }
+.keys { display: grid; grid-template-columns: repeat(3, 76px); gap: 12px 22px; justify-content: center; }
+.key { width: 76px; height: 76px; border-radius: 50%; border: 1px solid var(--line); background: var(--surface); display: grid; place-items: center; font-family: var(--font-display); font-weight: 600; font-size: 32px; font-variant-numeric: tabular-nums; }
+.key:active { background: var(--red-soft); }
+.key:disabled { opacity: .4; }
+.key.plain { border-color: transparent; background: transparent; }
+.admin-box { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px; display: flex; flex-direction: column; gap: 12px; }
+.code-form label { display: block; font-weight: 600; margin-bottom: 6px; }
+.code-form .row { display: flex; flex-wrap: wrap; gap: 10px; }
+.code-form input { flex: 1 1 120px; min-width: 0; min-height: 52px; border: 1.5px solid var(--muted); border-radius: 10px; background: var(--bg); color: var(--ink); font-family: var(--font-display); font-weight: 600; font-size: 26px; letter-spacing: .3em; padding: 0 14px; }
+.code-form .btn-main { flex: 1 1 160px; width: auto; min-height: 52px; }
+.admin-msg { min-height: 1.4em; font-weight: 500; }
+
+/* player */
+body.has-player .parts, body.has-player .home-list { padding-bottom: 190px; }
+.player { position: fixed; left: 0; right: 0; bottom: 0; z-index: 8; background: var(--ink); color: var(--bg); padding-bottom: env(safe-area-inset-bottom, 0px); }
+.player .wrap { padding-block: 10px 12px; display: flex; flex-direction: column; gap: 8px; }
+.p-top { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.p-title { min-width: 0; flex: 1; font-weight: 600; font-size: 16px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.p-time { flex: none; font-size: 14px; opacity: .8; font-variant-numeric: tabular-nums; }
+#seek { width: 100%; margin: 0; height: 24px; accent-color: var(--tag); }
+.p-btns { display: flex; align-items: center; justify-content: space-between; gap: 6px; }
+.p-btns button { min-width: 48px; min-height: 48px; border: 0; border-radius: 999px; background: transparent; color: inherit; display: inline-grid; place-items: center; font-weight: 600; font-size: 15px; font-variant-numeric: tabular-nums; }
+.p-btns button:disabled { opacity: .35; }
+.p-btns .pp { width: 58px; height: 58px; background: var(--red); color: var(--on-red); }
+.p-btns button:focus-visible { outline-color: var(--tag); }
+@media (min-width: 560px) { .home-top h1 { font-size: 54px; } .sop-head h1 { font-size: 46px; } }
+@media (prefers-reduced-motion: no-preference) { .jobtag, .listen, .btn-main { transition: background-color .15s, filter .15s; } }
+</style>
+
+<div id="app"></div>
+
+<div class="player" id="player" hidden>
+  <div class="wrap">
+    <div class="p-top"><span class="p-title" id="pTitle"></span><span class="p-time" id="pTime"></span></div>
+    <input type="range" id="seek" min="0" max="1000" value="0">
+    <div class="p-btns">
+      <button type="button" id="bRate">1×</button>
+      <button type="button" id="bPrev"><svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 5h2v14H6zM20 5v14L9 12z"/></svg></button>
+      <button type="button" id="bPlay" class="pp"></button>
+      <button type="button" id="bNext"><svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 5h2v14h-2zM4 5v14l11-7z"/></svg></button>
+      <button type="button" id="bStop"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+  // Titles are inlined so the list shows before data.json arrives. Order = most common job first, tests then repairs.
+  var INDEX = [
+    { id: "sop1", kind: "test", jobs: 86, en: "Fire Sprinkler Reg 4 5-Year Test", es: "Prueba de 5 años de rociadores, Reg 4" },
+    { id: "sop2", kind: "test", jobs: 81, en: "Fire Alarm and Central Station Annual Test", es: "Prueba anual de alarma contra incendios y estación central" },
+    { id: "sop3", kind: "test", jobs: 64, en: "Title 19 Annual Sprinkler Test", es: "Prueba anual de rociadores, Título 19" },
+    { id: "sop4", kind: "test", jobs: 62, en: "Emergency and Exit Light Annual Test", es: "Prueba anual de luces de emergencia y letreros de salida" },
+    { id: "sop5", kind: "test", jobs: 51, en: "Retest After Repairs", es: "Reprueba después de reparaciones" },
+    { id: "sop6", kind: "repair", jobs: 105, en: "Sprinkler Leak, Emergency Call and Head Replacement", es: "Fuga de rociadores, llamada de emergencia y cambio de cabezas" }
+  ];
+  var T = {
+    en: {
+      title: "Field SOPs", lead: "Read or listen to the procedure before you go to the job.",
+      draftB: "Draft", draft: "Not approved for field use until a lead tester reviews it.",
+      tests: "Testing", repairs: "Repairs", test: "Test", repair: "Repair",
+      jobs: " jobs last year", min: " min", all: "All SOPs", listen: "Listen", pause: "Pause",
+      fromStart: "Listen from the start", problem: "Problem", todo: "What to do",
+      loading: "Loading the procedure…", failed: "The procedure did not load. Check your connection and open the page again.",
+      phoneVoice: "Phone voice", pos: "Position", prev: "Previous part", next: "Next part", stop: "Stop", speed: "Speed", play: "Play",
+      lockTitle: "Enter the crew code", lockLead: "Ask your supervisor for the 4-digit code. You enter it once on this phone.",
+      lockWrong: "Wrong code. Try again.", lockWait: "Too many tries. Wait {s} seconds.", checking: "Checking…", opening: "Opening…",
+      lockFail: "The code could not be checked. Check your connection.", retry: "Try again", del: "Delete",
+      owner: "Owner", codeInfo: "Everyone uses the same crew code. When you change it, every phone asks for the new code the next time the app opens.",
+      newCode: "New 4-digit code", changeCode: "Change code", codeBad: "Enter exactly 4 digits.", codeSaving: "Saving…",
+      codeChanged: "The code is now {c}. Give it to your crew.", codeConflict: "The app was just updated. Open it again and retry.",
+      codeCant: "The code can't be changed from this screen. Ask Claude to change it.",
+      offTitle: "No signal?", offLead: "Save the English audio on this phone to listen with no signal. About {mb} MB.",
+      offSave: "Save audio", offSaving: "Saving {n} of {t}…", offDone: "The English audio is saved on this phone.",
+      offFail: "Not everything was saved. Check your connection and try again."
+    },
+    es: {
+      title: "Procedimientos", lead: "Lea o escuche el procedimiento antes de ir al trabajo.",
+      draftB: "Borrador", draft: "No está aprobado para uso en campo hasta que lo revise un probador líder.",
+      tests: "Pruebas", repairs: "Reparaciones", test: "Prueba", repair: "Reparación",
+      jobs: " trabajos el año pasado", min: " min", all: "Todos", listen: "Escuchar", pause: "Pausa",
+      fromStart: "Escuchar desde el inicio", problem: "Problema", todo: "Qué hacer",
+      loading: "Cargando el procedimiento…", failed: "El procedimiento no cargó. Revise su conexión y abra la página otra vez.",
+      phoneVoice: "Voz del teléfono", pos: "Posición", prev: "Parte anterior", next: "Parte siguiente", stop: "Detener", speed: "Velocidad", play: "Reproducir",
+      lockTitle: "Escriba el código del equipo", lockLead: "Pida a su supervisor el código de 4 dígitos. Se escribe una sola vez en este teléfono.",
+      lockWrong: "Código incorrecto. Intente otra vez.", lockWait: "Demasiados intentos. Espere {s} segundos.", checking: "Revisando…", opening: "Abriendo…",
+      lockFail: "No se pudo revisar el código. Revise su conexión.", retry: "Intentar otra vez", del: "Borrar",
+      owner: "Dueño", codeInfo: "Todos usan el mismo código del equipo. Cuando lo cambie, cada teléfono pedirá el código nuevo la próxima vez que se abra la app.",
+      newCode: "Código nuevo de 4 dígitos", changeCode: "Cambiar código", codeBad: "Escriba exactamente 4 dígitos.", codeSaving: "Guardando…",
+      codeChanged: "El código ahora es {c}. Déselo a su equipo.", codeConflict: "La app se acaba de actualizar. Ábrala otra vez e intente de nuevo.",
+      codeCant: "El código no se puede cambiar desde esta pantalla. Pida a Claude que lo cambie.",
+      offTitle: "¿Sin señal?", offLead: "Guarde el audio en español en este teléfono para escuchar sin señal. Unos {mb} MB.",
+      offSave: "Guardar audio", offSaving: "Guardando {n} de {t}…", offDone: "El audio en español está guardado en este teléfono.",
+      offFail: "No se guardó todo. Revise su conexión e intente otra vez."
+    }
+  };
+  var ICON = {
+    play: '<svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l13-7.5z"/></svg>',
+    pause: '<svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 5h4.5v14H6zM13.5 5H18v14h-4.5z"/></svg>',
+    ear: '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 9.5v5h3.5l5 4.5V5l-5 4.5zM15.5 8.2v7.6a4.6 4.6 0 0 0 0-7.6z"/></svg>',
+    back: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>',
+    chev: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>'
+  };
+
+  function store(k, v) { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (e) { return null; } }
+  var lang = store("sop-lang") || ((navigator.language || "en").toLowerCase().indexOf("es") === 0 ? "es" : "en");
+  if (lang !== "es") lang = "en";
+  var RATES = [1, 1.25, 1.5, 0.85];
+  var rate = parseFloat(store("sop-rate")) || 1;
+  if (RATES.indexOf(rate) < 0) rate = 1;
+
+  var data = null, loadFailed = false, cur = null, viewId = null;
+  var app = document.getElementById("app");
+  var $ = function (id) { return document.getElementById(id); };
+  var audio = new Audio(); audio.preload = "auto";
+  var synth = ("speechSynthesis" in window && "SpeechSynthesisUtterance" in window) ? window.speechSynthesis : null;
+
+  function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+  function rich(s) { return esc(s).replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>"); }
+  function clock(sec) { sec = Math.max(0, Math.floor(sec || 0)); return Math.floor(sec / 60) + ":" + String(sec % 60).padStart(2, "0"); }
+  function pad2(n) { return n < 10 ? "0" + n : "" + n; }
+  function sopData(id) { if (!data) return null; for (var i = 0; i < data.length; i++) if (data[i].id === id) return data[i]; return null; }
+  function minutes(id) {
+    var s = sopData(id); if (!s) return 0;
+    var t = 0, ps = s[lang].parts;
+    for (var i = 0; i < ps.length; i++) { if (!ps[i].dur) return 0; t += ps[i].dur; }
+    return Math.max(1, Math.round(t / 60));
+  }
+  function langSwitch() {
+    return '<div class="lang" role="group" aria-label="Language / Idioma">' +
+      '<button type="button" data-lang="en" aria-pressed="' + (lang === "en") + '">EN</button>' +
+      '<button type="button" data-lang="es" aria-pressed="' + (lang === "es") + '">ES</button></div>';
+  }
+  function draft() { var t = T[lang]; return '<p class="draft"><b>' + t.draftB + '</b>' + esc(t.draft) + '</p>'; }
+  function metaLine(x) {
+    var t = T[lang], m = minutes(x.id);
+    return x.jobs + t.jobs + (m ? " · " + m + t.min : "");
+  }
+
+  /* ---------- pictures ---------- */
+  var SICON = {
+    sop1: '<path d="M9 3h6M12 3v4M12 7c-4 1.5-4 6 0 7 4-1 4-5.5 0-7zM7 16.5h10M6.5 19.5l-1 1.5M12 19v2.5M17.5 19.5l1 1.5"/>',
+    sop2: '<path d="M6 16v-5a6 6 0 0 1 12 0v5l2 2.5H4zM10 20.5a2 2 0 0 0 4 0"/>',
+    sop3: '<circle cx="12" cy="12" r="8.5"/><path d="M12 12l4-4.5M12 5.5V7M5.5 12H7M18.5 12H17"/>',
+    sop4: '<rect x="4.5" y="10" width="15" height="9" rx="1.5"/><circle cx="7.5" cy="6" r="2.5"/><circle cx="16.5" cy="6" r="2.5"/><path d="M7.5 8.5V10M16.5 8.5V10"/>',
+    sop5: '<path d="M19.5 12a7.5 7.5 0 1 1-2.2-5.3M19.5 4v4h-4M9 12.2l2.2 2.2L15 10.5"/>',
+    sop6: '<path d="M12 3.5s6 6.3 6 10.7a6 6 0 0 1-12 0c0-4.4 6-10.7 6-10.7z"/>',
+    person: '<circle cx="12" cy="7.5" r="3.2"/><path d="M5 20.5a7 7 0 0 1 14 0"/>',
+    wrench: '<path d="M19.5 7.5a4.5 4.5 0 0 1-6 4.2l-6.6 6.6a2 2 0 0 1-2.8-2.8l6.6-6.6a4.5 4.5 0 0 1 5.5-5.7l-2.6 2.6.5 2.6 2.6.5z"/>'
+  };
+  function sicon(name, size) { return '<svg width="' + size + '" height="' + size + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + SICON[name] + '</svg>'; }
+  function ceiling() {
+    var h = '<svg class="ceiling" viewBox="0 0 400 44" preserveAspectRatio="xMidYMin slice" aria-hidden="true"><rect class="pipe" x="0" y="8" width="400" height="10"/><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">';
+    [70, 200, 330].forEach(function (x) { h += '<path d="M' + x + ' 18v5M' + x + ' 23c-5 2-5 8 0 9 5-1 5-7 0-9zM' + (x - 8) + ' 35.5h16"/>'; });
+    return h + '</g></svg>';
+  }
+  var FT = {
+    en: {
+      clock: [["2 working days before", "Notify LAFD"], ["Test day", "Run the test", 1], ["Within 7 days", "Report filed"], ["Within 30 days", "Repairs and retest"]],
+      clockCap: "The Reg 4 clock. Both deadlines count from the test day.",
+      retest: [["Day 0", "First test finds defects", 1], ["Next", "Every repair finished"], ["2 working days before", "Notify LAFD"], ["By day 30", "Retest"]],
+      retestCap: "A retest comes after all the repairs, and inside 30 days of the first test.",
+      ninety: [["0 min", "Power off. First walk.", 1], ["During", "Walk the route again."], ["90 min", "Final walk. Power back on.", 1]],
+      ninetyCap: "The units run on battery for the whole 90 minutes. Any unit that dims or goes out fails.",
+      riser: ["Control valve. Opens and closes the water. It must stay open.", "Supply gauge. The pressure coming in.", "Check valve. Keeps system water from flowing back.", "System gauge. The pressure in the system.", "Main drain. Where you run the main drain test.", "Flow switch. Sends the water flow alarm.", "Fire department connection. Where the fire engine pumps in.", "Inspector's test valve. At the far end. Opening it should set off the alarm."],
+      riserCap: "A typical wet pipe riser. The riser at your job may be laid out differently.",
+      drain: [["1. Drain closed", "Static pressure"], ["2. Drain open", "Residual pressure"], ["3. Drain closed again", "Back to static"]],
+      drainCap: "The main drain test in three readings. The needle drops while the drain is open and must come back.",
+      heads: [["Upright", "Sits on top of the pipe"], ["Pendent", "Hangs below the pipe"], ["Sidewall", "Sticks out from the wall"]],
+      headsCap: "The three head positions. The new head must match the old one.",
+      path: [["Devices", "Pull stations, detectors"], ["Panel", "Shows the location"], ["Horns and strobes", "Warn the people"], ["Monitoring company", "Receives alarm, supervisory and trouble signals"]],
+      pathCap: "The test follows this path: every device to the panel, the panel to the people, and the panel to the monitoring company.",
+      sigs: [["Alarm", "Fire. A detector, a pull station or sprinkler water flow."], ["Supervisory", "Something is off normal, like a closed sprinkler valve."], ["Trouble", "The system itself has a fault, like lost power or a broken wire."]],
+      sigsCap: "The three signals the monitoring company must receive.",
+      visits: ["Quarterly visit", "Annual visit"], visitsKey: "A: checks · B: inspections · C: tests",
+      visitsCap: "Which parts of the test steps each visit covers. The five-year items are a separate job.",
+      order: [["1. People", "Fire or smoke? Everyone out. Call 911."], ["2. Water", "Stop it at the head, or at the smallest valve."], ["3. Repair", "Only after the estimate is approved."]],
+      orderCap: "The order on every emergency call."
+    },
+    es: {
+      clock: [["2 días hábiles antes", "Avisar a LAFD"], ["Día de la prueba", "Hacer la prueba", 1], ["En 7 días", "Reporte entregado"], ["En 30 días", "Reparaciones y reprueba"]],
+      clockCap: "El reloj de Reg 4. Los dos plazos cuentan desde el día de la prueba.",
+      retest: [["Día 0", "La primera prueba encuentra defectos", 1], ["Después", "Todas las reparaciones terminadas"], ["2 días hábiles antes", "Avisar a LAFD"], ["Antes del día 30", "Reprueba"]],
+      retestCap: "La reprueba va después de todas las reparaciones, y dentro de 30 días de la primera prueba.",
+      ninety: [["0 min", "Se apaga la corriente. Primer recorrido.", 1], ["Durante", "Recorra la ruta otra vez."], ["90 min", "Recorrido final. Regresa la corriente.", 1]],
+      ninetyCap: "Las unidades funcionan con batería los 90 minutos completos. La unidad que baje de intensidad o se apague no pasa.",
+      riser: ["Válvula de control. Abre y cierra el agua. Debe quedarse abierta.", "Manómetro de suministro. La presión que entra.", "Válvula check. No deja que el agua del sistema se regrese.", "Manómetro del sistema. La presión en el sistema.", "Drenaje principal. Aquí se hace la prueba del drenaje principal.", "Interruptor de flujo. Manda la alarma de flujo de agua.", "Conexión de bomberos. Aquí bombea el camión de bomberos.", "Válvula de prueba del inspector. Está en el punto más lejano. Al abrirla debe sonar la alarma."],
+      riserCap: "Un riser típico de tubería mojada. El riser de su trabajo puede estar acomodado de otra forma.",
+      drain: [["1. Drenaje cerrado", "Presión estática"], ["2. Drenaje abierto", "Presión residual"], ["3. Drenaje cerrado otra vez", "Regresa a la estática"]],
+      drainCap: "La prueba del drenaje principal en tres lecturas. La aguja baja con el drenaje abierto y debe regresar.",
+      heads: [["Hacia arriba (upright)", "Va encima del tubo"], ["Colgante (pendent)", "Cuelga debajo del tubo"], ["De pared (sidewall)", "Sale de la pared"]],
+      headsCap: "Las tres posiciones de cabeza. La cabeza nueva debe ser igual a la vieja.",
+      path: [["Dispositivos", "Estaciones manuales, detectores"], ["Panel", "Muestra la ubicación"], ["Bocinas y luces", "Avisan a la gente"], ["Compañía de monitoreo", "Recibe señales de alarma, supervisión y falla"]],
+      pathCap: "La prueba sigue este camino: cada dispositivo al panel, el panel a la gente, y el panel a la compañía de monitoreo.",
+      sigs: [["Alarma", "Fuego. Un detector, una estación manual o flujo de agua de rociadores."], ["Supervisión", "Algo está fuera de lo normal, como una válvula de rociadores cerrada."], ["Falla", "El sistema mismo tiene un problema, como falta de corriente o un cable roto."]],
+      sigsCap: "Las tres señales que debe recibir la compañía de monitoreo.",
+      visits: ["Visita trimestral", "Visita anual"], visitsKey: "A: revisiones · B: inspecciones · C: pruebas",
+      visitsCap: "Qué partes de los pasos cubre cada visita. Los puntos de 5 años son un trabajo aparte.",
+      order: [["1. Gente", "¿Fuego o humo? Todos afuera. Llame al 911."], ["2. Agua", "Párela en la cabeza, o en la válvula más pequeña."], ["3. Reparación", "Solo después de aprobar el presupuesto."]],
+      orderCap: "El orden en cada llamada de emergencia."
+    }
+  };
+  function figure(inner, cap) { return '<figure class="fig">' + inner + '<figcaption>' + esc(cap) + '</figcaption></figure>'; }
+  function stops(list, cls) {
+    var h = '<div class="tl' + (cls ? " " + cls : "") + '">';
+    list.forEach(function (s) { h += '<div class="stop' + (s[2] ? " hot" : "") + '"><b>' + esc(s[0]) + '</b><span>' + esc(s[1]) + '</span></div>'; });
+    return h + '</div>';
+  }
+  function trio(list) { var h = '<div class="trio">'; list.forEach(function (s) { h += '<div><b>' + esc(s[0]) + '</b><span>' + esc(s[1]) + '</span></div>'; }); return h + '</div>'; }
+  function num(n, x, y) { return '<g class="num"><circle cx="' + x + '" cy="' + y + '" r="10"/><text x="' + x + '" y="' + (y + 4.2) + '" text-anchor="middle">' + n + '</text></g>'; }
+  var ARROW = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 8h11M9 4l4 4-4 4"/></svg>';
+  function figClock() { var f = FT[lang]; return figure(stops(f.clock), f.clockCap); }
+  function figRetest() { var f = FT[lang]; return figure(stops(f.retest), f.retestCap); }
+  function fig90() { var f = FT[lang]; return figure(stops(f.ninety, "batt"), f.ninetyCap); }
+  function figRiser() {
+    var f = FT[lang], s = '<svg class="dia" viewBox="0 0 340 304" role="img" aria-label="' + esc(f.riserCap) + '">';
+    s += '<path class="hair" d="M30 96v196M10 292h320"/>';
+    s += '<rect class="pipe" x="14" y="121" width="128" height="8"/><rect class="pipe" x="92" y="196" width="50" height="8"/><rect class="pipe" x="92" y="196" width="8" height="82"/>';
+    s += '<rect class="pipe" x="142" y="32" width="16" height="260"/><rect class="pipe" x="142" y="32" width="150" height="16"/><rect class="pipe" x="282" y="48" width="8" height="30"/>';
+    s += '<path class="onpipe" d="M146 282l4-5 4 5M146 112l4-5 4 5M268 36l5 4-5 4"/>';
+    [200, 250].forEach(function (x) { s += '<path class="ink" d="M' + x + ' 48v6M' + x + ' 54c-4 1.5-4 6.5 0 7.5 4-1 4-6 0-7.5zM' + (x - 7) + ' 65h14"/>'; });
+    s += '<path class="solid" d="M280 56h12l-6 6zM280 68h12l-6-6z"/><path class="drip" d="M286 83v4M286 91v3"/>';
+    s += '<circle class="body" cx="14" cy="117" r="5.5"/><circle class="body" cx="14" cy="133" r="5.5"/><path class="solid" d="M82 117l10 8-10 8z"/>';
+    s += '<rect class="body" x="104" y="74" width="34" height="22" rx="3"/><path class="ink" d="M138 85h10"/><path class="hair" d="M121 74c0-9-10-7-10-15"/>';
+    s += '<path class="ink" d="M158 150h20"/><circle class="body" cx="190" cy="150" r="11"/><path class="ink" d="M190 150l5-6"/>';
+    s += '<rect class="body" x="134" y="172" width="32" height="30" rx="6"/><path class="ink" d="M141 196l18-17"/>';
+    s += '<path class="ink" d="M158 222h20"/><circle class="body" cx="190" cy="222" r="11"/><path class="ink" d="M190 222l5-6"/>';
+    s += '<path class="solid" d="M134 240h32l-16 12zM134 264h32l-16-12z"/><path class="ink" d="M166 252h30"/><circle class="body" cx="206" cy="252" r="10"/><path class="ink" d="M206 242v20M196 252h20"/>';
+    s += '<path class="solid" d="M90 230h12l-6 6zM90 242h12l-6-6z"/><path class="drip" d="M96 282v4"/>';
+    s += num(1, 236, 252) + num(2, 218, 222) + num(3, 186, 187) + num(4, 218, 150) + num(5, 68, 236) + num(6, 86, 85) + num(7, 56, 104) + num(8, 312, 62) + '</svg>';
+    var l = '<ol class="legend">'; f.riser.forEach(function (x, i) { l += '<li><span class="ln">' + (i + 1) + '</span><span>' + esc(x) + '</span></li>'; });
+    return figure(s + l + '</ol>', f.riserCap);
+  }
+  function dial(cx, deg, ghost) {
+    var cy = 46, h = '<circle class="body" cx="' + cx + '" cy="' + cy + '" r="36"/>', a, r;
+    for (var d = -120; d <= 120; d += 40) { a = d * Math.PI / 180; h += '<path class="ink" d="M' + (cx + 27 * Math.sin(a)).toFixed(1) + ' ' + (cy - 27 * Math.cos(a)).toFixed(1) + 'L' + (cx + 32 * Math.sin(a)).toFixed(1) + ' ' + (cy - 32 * Math.cos(a)).toFixed(1) + '"/>'; }
+    if (ghost !== undefined) { r = ghost * Math.PI / 180; h += '<path class="ghost" d="M' + cx + ' ' + cy + 'L' + (cx + 23 * Math.sin(r)).toFixed(1) + ' ' + (cy - 23 * Math.cos(r)).toFixed(1) + '"/>'; }
+    a = deg * Math.PI / 180;
+    return h + '<path class="ink" stroke-width="3" d="M' + cx + ' ' + cy + 'L' + (cx + 23 * Math.sin(a)).toFixed(1) + ' ' + (cy - 23 * Math.cos(a)).toFixed(1) + '"/><circle class="solid" cx="' + cx + '" cy="' + cy + '" r="3.5"/>';
+  }
+  function figDrain() {
+    var f = FT[lang], s = '<svg class="dia" viewBox="0 0 340 92" role="img" aria-label="' + esc(f.drainCap) + '">' + dial(57, 55) + dial(170, -15, 55) + dial(283, 55) +
+      '<path class="ink" d="M104 46h14M113 41l5 5-5 5M217 46h14M226 41l5 5-5 5"/></svg>';
+    return figure(s + trio(f.drain), f.drainCap);
+  }
+  function figHeads() {
+    var f = FT[lang], s = '<svg class="dia" viewBox="0 0 340 92" role="img" aria-label="' + esc(f.headsCap) + '">';
+    s += '<rect class="pipe" x="17" y="64" width="80" height="10"/><path class="ink" d="M57 64v-6M57 58c-6-2-6-10 0-12 6 2 6 10 0 12z"/><path class="ink" stroke-width="3" d="M45 42h24"/>';
+    s += '<rect class="pipe" x="130" y="18" width="80" height="10"/><path class="ink" d="M170 28v6M170 34c-6 2-6 10 0 12 6-2 6-10 0-12z"/><path class="ink" stroke-width="3" d="M158 50h24"/>';
+    s += '<path class="hair" d="M250 8v78"/><rect class="pipe" x="250" y="41" width="20" height="10"/><path class="ink" d="M270 46h6M276 46c2-6 10-6 12 0-2 6-10 6-12 0z"/><path class="ink" stroke-width="3" d="M292 36v20M292 36h-7"/>';
+    return figure(s + '</svg>' + trio(f.heads), f.headsCap);
+  }
+  function figPath() {
+    var f = FT[lang], p = f.path;
+    function node(x, cls) { return '<div class="node' + (cls ? " " + cls : "") + '"><b>' + esc(x[0]) + '</b><span>' + esc(x[1]) + '</span></div>'; }
+    var a = '<span class="arr">' + ARROW + '</span>';
+    var h = '<div class="flow">' + node(p[0], "wide") + '<span class="arr wide">' + ARROW + '</span>' + node(p[1], "hot wide") + a + a + node(p[2]) + node(p[3]) + '</div>';
+    return figure(h, f.pathCap);
+  }
+  function figSignals() {
+    var f = FT[lang], k = ["a", "s", "t"], h = '<ul class="sigs">';
+    f.sigs.forEach(function (x, i) { h += '<li><span class="dot ' + k[i] + '"></span><span><b>' + esc(x[0]) + '</b>' + esc(x[1]) + '</span></li>'; });
+    return figure(h + '</ul>', f.sigsCap);
+  }
+  function figVisits() {
+    var f = FT[lang], on = [[1, 0, 0], [1, 1, 1]], h = '<div class="visits">';
+    f.visits.forEach(function (lab, r) {
+      h += '<div class="row"><span class="lab">' + esc(lab) + '</span><span class="chips">';
+      ["A", "B", "C"].forEach(function (c, i) { h += '<span class="chip' + (on[r][i] ? " on" : "") + '">' + c + '</span>'; });
+      h += '</span></div>';
+    });
+    return figure(h + '<p class="vkey">' + esc(f.visitsKey) + '</p></div>', f.visitsCap);
+  }
+  function figOrder() {
+    var f = FT[lang], ic = ["person", "sop6", "wrench"], h = '<div class="order">';
+    f.order.forEach(function (x, i) { h += '<div class="tile"><span class="ic">' + sicon(ic[i], 24) + '</span><span class="tx"><b>' + esc(x[0]) + '</b><span>' + esc(x[1]) + '</span></span></div>'; });
+    return figure(h + '</div>', f.orderCap);
+  }
+  // Which picture goes in which part of which SOP (part numbers start at 0).
+  var FIGS = {
+    sop1: { 0: figClock, 2: figRiser, 3: figDrain },
+    sop2: { 0: figPath, 1: figClock, 3: figSignals },
+    sop3: { 0: figVisits, 2: figRiser, 3: figDrain },
+    sop4: { 0: figClock, 3: fig90 },
+    sop5: { 0: figRetest },
+    sop6: { 2: figOrder, 3: figHeads }
+  };
+
+  /* ---------- web app only: save the audio for use with no signal ---------- */
+  var cacheMeta = document.querySelector('meta[name="ace-audio-cache"]');
+  var WEBAPP = !!cacheMeta && "caches" in window;
+  var off = { en: { n: 0, busy: false, fail: false }, es: { n: 0, busy: false, fail: false } };
+  function clips(l) { var u = []; if (data) data.forEach(function (s) { s[l].parts.forEach(function (p) { if (p.audio) u.push(ENC() ? encPath(p.audio) : p.audio); }); }); return u; }
+  function clipsMB(l) { var t = 0; if (data) data.forEach(function (s) { s[l].parts.forEach(function (p) { t += p.dur || 0; }); }); return Math.max(1, Math.round(t * 5000 / 1048576)); }
+  function offInner() {
+    var t = T[lang], o = off[lang], all = clips(lang).length;
+    if (o.busy) return '<p role="status">' + esc(t.offSaving.replace("{n}", o.n).replace("{t}", all)) + '</p>';
+    if (all && o.n >= all) return '<p role="status">' + esc(t.offDone) + '</p>';
+    return '<p role="status">' + esc((o.fail ? t.offFail + " " : "") + t.offLead.replace("{mb}", clipsMB(lang))) + '</p><button type="button" class="btn-main" data-off="1">' + t.offSave + '</button>';
+  }
+  function paintOff() { var el = $("offBox"); if (el) el.innerHTML = offInner(); }
+  function countSaved(l) {
+    var u = clips(l), n = 0;
+    return caches.open(cacheMeta.content).then(function (c) {
+      return Promise.all(u.map(function (x) { return c.match(x).then(function (r) { if (r) n++; }); }));
+    }).then(function () { off[l].n = n; return n; });
+  }
+  function saveAudio(l) {
+    var o = off[l], u = clips(l), i = 0;
+    if (o.busy || !u.length) return;
+    o.busy = true; o.fail = false; o.n = 0; paintOff();
+    caches.open(cacheMeta.content).then(function (c) {
+      function next() {
+        if (i >= u.length) return null;
+        return c.match(u[i]).then(function (hit) {
+          if (hit) return null;
+          return fetch(u[i]).then(function (r) { if (!r.ok || r.status !== 200) throw new Error(r.status); return c.put(u[i], r); });
+        }).then(function () { i++; o.n = i; paintOff(); return next(); });
+      }
+      return next();
+    }).then(function () { return countSaved(l); }, function () { return countSaved(l); })
+      .then(function (n) { o.busy = false; o.fail = n < u.length; paintOff(); })
+      .catch(function () { o.busy = false; o.fail = true; paintOff(); });
+  }
+
+  function renderHome() {
+    var t = T[lang], h = "";
+    h += '<header class="home-top">' + ceiling() + '<div class="wrap"><div class="brand-row"><div class="brand"><span class="mark">ACE</span><span>ACE Fire LA</span></div>' + langSwitch() + '</div>';
+    h += '<h1>' + t.title + '</h1><p class="lead">' + t.lead + '</p>' + draft() + '</div></header>';
+    h += '<main class="wrap home-list">';
+    var lastKind = null;
+    INDEX.forEach(function (x, n) {
+      if (x.kind !== lastKind) { h += '<h2 class="group">' + (x.kind === "test" ? t.tests : t.repairs) + '</h2>'; lastKind = x.kind; }
+      h += '<a class="jobtag" href="#' + x.id + '"><span class="ico">' + sicon(x.id, 30) + '</span><span class="txt"><span class="no">' + pad2(n + 1) + '</span><span class="ttl">' + esc(x[lang]) + '</span><span class="meta">' + metaLine(x) + '</span></span><span class="chev">' + ICON.chev + '</span></a>';
+    });
+    if (canEdit) {
+      h += '<h2 class="group">' + t.owner + '</h2><div class="admin-box"><p>' + t.codeInfo + '</p>' +
+        '<form class="code-form" id="codeForm" novalidate><label for="newCode">' + t.newCode + '</label><div class="row">' +
+        '<input id="newCode" type="text" inputmode="numeric" autocomplete="off" maxlength="4" pattern="[0-9]{4}">' +
+        '<button type="submit" class="btn-main" id="codeSave">' + t.changeCode + '</button></div></form>' +
+        '<p class="admin-msg" id="adminMsg" role="status">' + esc(adminMsg) + '</p></div>';
+    }
+    if (WEBAPP && data) h += '<h2 class="group">' + t.offTitle + '</h2><div class="admin-box" id="offBox">' + offInner() + '</div>';
+    h += '</main>';
+    app.innerHTML = h;
+  }
+
+  /* ---------- crew code ---------- */
+  // A light gate, not real security: it keeps the procedures off phones that do not have the current code.
+  var access = null, accessFailed = false, unlocked = false, entry = "", wrong = 0, lockUntil = 0, lockMsg = "", lockTimer = null;
+  var canEdit = false, adminMsg = "";
+  function h53(str) {
+    var h1 = 0xdeadbeef ^ 7, h2 = 0x41c6ce57 ^ 7;
+    for (var i = 0, ch; i < str.length; i++) { ch = str.charCodeAt(i); h1 = Math.imul(h1 ^ ch, 2654435761); h2 = Math.imul(h2 ^ ch, 1597334677); }
+    h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
+    h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
+    return ("0000000" + (h2 >>> 0).toString(16)).slice(-8) + ("0000000" + (h1 >>> 0).toString(16)).slice(-8);
+  }
+  function codeHash(salt, code) { return h53("ace-sop:" + salt + ":" + code) + h53(code + "/" + salt + "/field"); }
+  // Locked build (the web app): the text and the audio are stored encrypted, and the crew code is what opens them.
+  var cryptoKey = null, checking = false;
+  function ENC() { return !!(access && access.check); }
+  function b64ToBuf(str) { var b = atob(str), u = new Uint8Array(b.length); for (var i = 0; i < b.length; i++) u[i] = b.charCodeAt(i); return u; }
+  function bufToB64(buf) { var u = new Uint8Array(buf), o = ""; for (var i = 0; i < u.length; i++) o += String.fromCharCode(u[i]); return btoa(o); }
+  function deriveRaw(code) {
+    return Promise.resolve().then(function () {
+      var te = new TextEncoder();
+      return crypto.subtle.importKey("raw", te.encode(code), "PBKDF2", false, ["deriveBits"]).then(function (k) {
+        return crypto.subtle.deriveBits({ name: "PBKDF2", hash: "SHA-256", salt: te.encode(access.salt), iterations: access.iter }, k, 256);
+      });
+    });
+  }
+  function decrypt(buf) { var u = new Uint8Array(buf); return crypto.subtle.decrypt({ name: "AES-GCM", iv: u.subarray(0, 12) }, cryptoKey, u.subarray(12)); }
+  // Resolves only when this key really opens the content.
+  function tryKey(raw) {
+    return Promise.resolve().then(function () { return crypto.subtle.importKey("raw", raw, "AES-GCM", false, ["decrypt"]); }).then(function (k) {
+      var u = b64ToBuf(access.check);
+      return crypto.subtle.decrypt({ name: "AES-GCM", iv: u.subarray(0, 12) }, k, u.subarray(12)).then(function () { cryptoKey = k; });
+    });
+  }
+  function cooling() { return Date.now() < lockUntil; }
+  function renderLock() {
+    var t = T[lang], i, h = '<main class="lock"><div class="wrap lock-in"><div class="lock-top"><div class="brand"><span class="mark">ACE</span><span>ACE Fire LA</span></div>' + langSwitch() + '</div>';
+    if (!access && !accessFailed && (store("sop-code") || store("sop-key"))) { app.innerHTML = h + '<p class="state">' + t.opening + '</p></div></main>'; return; }
+    h += '<h1>' + t.lockTitle + '</h1><p class="lead">' + t.lockLead + '</p>';
+    if (accessFailed) h += '<p class="lock-msg">' + t.lockFail + '</p><button type="button" class="btn-main" data-retry="1">' + t.retry + '</button>';
+    else {
+      h += '<div class="pins" id="pins">'; for (i = 0; i < 4; i++) h += '<span class="pin"></span>';
+      h += '</div><p class="lock-msg" id="lockMsg" role="status"></p><div class="keys">';
+      for (i = 1; i <= 9; i++) h += '<button type="button" class="key" data-key="' + i + '">' + i + '</button>';
+      h += '<span></span><button type="button" class="key" data-key="0">0</button><button type="button" class="key plain" data-key="del" aria-label="' + t.del + '"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5h11v14H9l-6-7zM12.5 9.5l5 5M17.5 9.5l-5 5"/></svg></button></div>';
+    }
+    app.innerHTML = h + '</div></main>';
+    paintLock();
+  }
+  function paintLock() {
+    var pins = app.querySelectorAll(".pin"), keys = app.querySelectorAll(".key"), m = $("lockMsg"), t = T[lang], i;
+    for (i = 0; i < pins.length; i++) pins[i].classList.toggle("on", i < entry.length);
+    var shut = !access || checking || cooling();
+    for (i = 0; i < keys.length; i++) keys[i].disabled = shut;
+    if (m) m.textContent = !access || checking ? t.checking : (cooling() ? t.lockWait.replace("{s}", Math.ceil((lockUntil - Date.now()) / 1000)) : lockMsg);
+  }
+  function pressKey(k) {
+    if (unlocked || !access || checking || cooling() || entry.length >= 4 && k !== "del") return;
+    lockMsg = "";
+    if (k === "del") { entry = entry.slice(0, -1); paintLock(); return; }
+    entry += k; paintLock();
+    if (entry.length < 4) return;
+    setTimeout(function () {
+      var code = entry; entry = "";
+      if (ENC()) {
+        checking = true; paintLock();
+        deriveRaw(code).then(function (raw) { return tryKey(raw).then(function () { store("sop-key", access.salt + ":" + bufToB64(raw)); }); })
+          .then(function () { checking = false; wrong = 0; unlock(); }, function () { checking = false; miss(); });
+        return;
+      }
+      var hsh = codeHash(access.salt, code);
+      if (hsh === access.hash) { wrong = 0; store("sop-code", hsh); unlock(); return; }
+      miss();
+    }, 160);
+  }
+  function miss() {
+    wrong++;
+    if (wrong >= 5) {
+      wrong = 0; lockUntil = Date.now() + 30000;
+      clearInterval(lockTimer); lockTimer = setInterval(function () { if (!cooling()) clearInterval(lockTimer); if (!unlocked) paintLock(); }, 1000);
+    } else lockMsg = T[lang].lockWrong;
+    paintLock();
+  }
+  function loadAccess() {
+    accessFailed = false;
+    fetch("access.json", { cache: "no-store" }).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function (a) {
+        access = a;
+        if (ENC()) {
+          // This phone already entered the current code: its saved key still opens the content.
+          var sk = store("sop-key") || "", cut = sk.indexOf(":");
+          if (cut > 0 && sk.slice(0, cut) === a.salt) return tryKey(b64ToBuf(sk.slice(cut + 1))).then(unlock, renderLock);
+          renderLock(); return;
+        }
+        if (store("sop-code") === a.hash) unlock(); else renderLock();
+      })
+      .catch(function () { accessFailed = true; renderLock(); });
+  }
+  function unlock() {
+    unlocked = true; route(true);
+    if (!data) (ENC()
+      ? fetch("data.enc").then(function (r) { if (!r.ok) throw new Error(r.status); return r.arrayBuffer(); })
+          .then(decrypt).then(function (b) { return JSON.parse(new TextDecoder().decode(b)); })
+      : fetch("data.json").then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }))
+      .then(function (d) {
+        data = d; route(true);
+        if (WEBAPP) Promise.all([countSaved("en"), countSaved("es")]).then(paintOff, function () {});
+      })
+      .catch(function () { loadFailed = true; route(true); });
+    // Only someone who can edit this page (the owner) sees the control that changes the code.
+    try {
+      if (window.claude && claude.use) claude.use("user").then(function (u) { return u ? u.canEdit() : false; })
+        .then(function (ok) { canEdit = !!ok; if (canEdit && viewId === "home") renderHome(); }).catch(function () {});
+    } catch (e) {}
+  }
+  function changeCode(code) {
+    var t = T[lang], btn = $("codeSave");
+    function say(m) { adminMsg = m; var el = $("adminMsg"); if (el) el.textContent = m; if (btn) btn.disabled = false; }
+    if (!/^[0-9]{4}$/.test(code)) { say(t.codeBad); return; }
+    if (btn) btn.disabled = true; adminMsg = t.codeSaving; if ($("adminMsg")) $("adminMsg").textContent = adminMsg;
+    var salt = Math.random().toString(36).slice(2, 10) + Date.now().toString(36);
+    var next = { salt: salt, hash: codeHash(salt, code), changed: new Date().toISOString().slice(0, 10) };
+    Promise.resolve().then(function () { return window.claude && claude.use ? claude.use("artifact") : null; })
+      .then(function (art) {
+        if (!art) throw { code: "capability_disabled" };
+        return art.publish({ "access.json": { content: JSON.stringify(next), contentType: "application/json" } });
+      })
+      .then(function () { access = next; store("sop-code", next.hash); var i = $("newCode"); if (i) i.value = ""; say(t.codeChanged.replace("{c}", code)); })
+      .catch(function (e) { say(e && e.code === "conflict" ? t.codeConflict : t.codeCant); });
+  }
+
+  function block(b) {
+    var t = T[lang], h = "", i;
+    if (b.t === "p") return '<p>' + rich(b.x) + '</p>';
+    if (b.t === "note") return '<p class="note">' + rich(b.x) + '</p>';
+    if (b.t === "sub") return '<h3>' + rich(b.x) + '</h3>';
+    if (b.t === "ul") { h = '<ul class="dots">'; for (i = 0; i < b.items.length; i++) h += '<li>' + rich(b.items[i]) + '</li>'; return h + '</ul>'; }
+    if (b.t === "ol") { h = '<ol class="steps">'; for (i = 0; i < b.items.length; i++) h += '<li><span class="sn">' + (b.start + i) + '</span><span class="st">' + rich(b.items[i]) + '</span></li>'; return h + '</ol>'; }
+    if (b.t === "table") { h = '<div class="fixes">'; for (i = 0; i < b.rows.length; i++) h += '<div class="fix"><p class="q">' + rich(b.rows[i][0]) + '</p><p class="a"><span class="lbl">' + t.todo + '</span>' + rich(b.rows[i][1]) + '</p></div>'; return h + '</div>'; }
+    return "";
+  }
+
+  function renderSop(id) {
+    var t = T[lang], x = INDEX.filter(function (r) { return r.id === id; })[0], s = sopData(id), h = "";
+    h += '<div class="bar"><div class="wrap"><a class="back" href="#home">' + ICON.back + '<span>' + t.all + '</span></a>' + langSwitch() + '</div></div>';
+    h += '<main><div class="wrap sop-head"><div class="eyerow"><span class="ico">' + sicon(x.id, 26) + '</span><p class="eyebrow">' + (x.kind === "test" ? t.test : t.repair) + ' · ' + x.jobs + t.jobs + '</p></div><h1>' + esc(x[lang]) + '</h1>' + draft();
+    if (!s) { h += '<p class="state">' + (loadFailed ? t.failed : t.loading) + '</p></div></main>'; app.innerHTML = h; return; }
+    var ps = s[lang].parts, canHear = synth || ps.some(function (p) { return p.audio; }), m = minutes(id), i;
+    if (canHear) h += '<button type="button" class="btn-main" data-play="0" data-main="1">' + ICON.play + '<span>' + t.fromStart + (m ? ' · ' + m + t.min : '') + '</span></button>';
+    h += '<ol class="toc">';
+    for (i = 0; i < ps.length; i++) h += '<li><button type="button" data-go="' + i + '"><span class="n">' + (i + 1) + '</span><span class="h">' + esc(ps[i].h) + '</span>' + (ps[i].dur ? '<span class="d">' + clock(ps[i].dur) + '</span>' : '') + '</button></li>';
+    h += '</ol></div><div class="wrap parts">';
+    for (i = 0; i < ps.length; i++) {
+      h += '<section class="part" id="part-' + i + '"><div class="part-head"><span class="pn">' + (i + 1) + '</span><h2>' + esc(ps[i].h) + '</h2>';
+      if (synth || ps[i].audio) h += '<button type="button" class="listen" data-play="' + i + '"></button>';
+      h += '</div>';
+      for (var j = 0; j < ps[i].blocks.length; j++) {
+        h += block(ps[i].blocks[j]);
+        if (j === 0 && FIGS[id] && FIGS[id][i]) h += FIGS[id][i]();
+      }
+      h += '</section>';
+    }
+    h += '</div></main>';
+    app.innerHTML = h;
+    paint();
+  }
+
+  function route(keepScroll) {
+    if (!unlocked) { viewId = null; document.documentElement.lang = lang; renderLock(); return; }
+    var h = location.hash.replace("#", "");
+    var hit = INDEX.filter(function (r) { return r.id === h; })[0];
+    var next = hit ? hit.id : "home";
+    if (cur && cur.id !== next) stop();
+    var changed = next !== viewId;
+    viewId = next;
+    document.documentElement.lang = lang;
+    if (hit) renderSop(hit.id); else renderHome();
+    if (changed && !keepScroll) window.scrollTo(0, 0);
+    paint();
+  }
+
+  /* ---------- listening ---------- */
+  function parts() { var s = cur && sopData(cur.id); return s ? s[lang].parts : []; }
+  function pickVoice() {
+    if (!synth) return null;
+    var vs = synth.getVoices() || [], want = lang === "es" ? ["es-mx", "es-us", "es-419", "es"] : ["en-us", "en"];
+    for (var w = 0; w < want.length; w++) for (var i = 0; i < vs.length; i++) if ((vs[i].lang || "").toLowerCase().replace("_", "-").indexOf(want[w]) === 0) return vs[i];
+    return null;
+  }
+  function silence() { try { audio.pause(); } catch (e) {} if (synth) { try { synth.cancel(); } catch (e) {} } }
+  // Locked build: a clip is downloaded (or taken from the phone's saved copy), unlocked, and played from memory.
+  var blobs = {};
+  function encPath(a) { return a.replace(/\.mp3$/, ".bin"); }
+  function clipUrl(a) {
+    if (blobs[a]) return blobs[a];
+    var names = Object.keys(blobs), keep = cur ? parts()[cur.i].audio : null;
+    for (var n = 0; names.length - n > 3; n++) {
+      if (names[n] === keep) continue;
+      blobs[names[n]].then(function (u) { URL.revokeObjectURL(u); }, function () {}); delete blobs[names[n]];
+    }
+    var saved = WEBAPP ? caches.open(cacheMeta.content).then(function (c) { return c.match(encPath(a)); }).catch(function () {}) : Promise.resolve();
+    var pr = saved.then(function (hit) { return hit || fetch(encPath(a)); })
+      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.arrayBuffer(); })
+      .then(decrypt)
+      .then(function (b) { return URL.createObjectURL(new Blob([b], { type: "audio/mpeg" })); });
+    blobs[a] = pr; pr.catch(function () { if (blobs[a] === pr) delete blobs[a]; });
+    return pr;
+  }
+  // A short silent sound. It starts inside the tap, so the phone still allows the real clip to play a moment later.
+  var SILENCE = (function () {
+    try {
+      var n = 4000, b = new Uint8Array(44 + n), v = new DataView(b.buffer), i;
+      var w = function (o, str) { for (var j = 0; j < str.length; j++) b[o + j] = str.charCodeAt(j); };
+      w(0, "RIFF"); v.setUint32(4, 36 + n, true); w(8, "WAVEfmt "); v.setUint32(16, 16, true); v.setUint16(20, 1, true); v.setUint16(22, 1, true);
+      v.setUint32(24, 8000, true); v.setUint32(28, 8000, true); v.setUint16(32, 1, true); v.setUint16(34, 8, true); w(36, "data"); v.setUint32(40, n, true);
+      for (i = 44; i < b.length; i++) b[i] = 128;
+      return URL.createObjectURL(new Blob([b], { type: "audio/wav" }));
+    } catch (e) { return ""; }
+  })();
+  function start(i) {
+    var id = viewId; if (!sopData(id)) return;
+    silence();
+    cur = { id: id, i: i, mode: null, playing: true, si: 0, token: null };
+    var p = parts()[i];
+    if (p.audio && ENC()) {
+      cur.mode = "file"; cur.loading = true;
+      var mine = cur;
+      if (SILENCE) { audio.loop = true; audio.src = SILENCE; var s0 = audio.play(); if (s0 && s0.catch) s0.catch(function () {}); }
+      clipUrl(p.audio).then(function (u) {
+        if (cur !== mine) return;
+        var go = mine.playing;
+        mine.loading = false; audio.loop = false; audio.src = u; audio.playbackRate = rate;
+        if (go) { var p1 = audio.play(); if (p1 && p1.catch) p1.catch(function () { if (cur === mine) { cur.playing = false; paint(); } }); }
+        var nx = parts()[mine.i + 1]; if (nx && nx.audio) clipUrl(nx.audio).catch(function () {});
+        paint();
+      }, function () {
+        if (cur !== mine) return;
+        mine.loading = false; audio.loop = false; try { audio.pause(); } catch (e) {}
+        mine.si = 0; useVoice();
+      });
+    } else if (p.audio) {
+      cur.mode = "file"; audio.loop = false; audio.src = p.audio; audio.playbackRate = rate;
+      var me = cur, pr = audio.play();
+      if (pr && pr.catch) pr.catch(function () { if (cur === me && audio.error) useVoice(); else if (cur === me) { cur.playing = false; paint(); } });
+    } else useVoice();
+    try {
+      if ("mediaSession" in navigator && window.MediaMetadata) {
+        navigator.mediaSession.metadata = new MediaMetadata({ title: (i + 1) + ". " + p.h, artist: "ACE Fire LA", album: sopData(id)[lang].title });
+      }
+    } catch (e) {}
+    paint();
+  }
+  function useVoice() {
+    if (!cur) return;
+    if (!synth) { cur = null; paint(); return; }
+    cur.mode = "tts"; cur.playing = true; speakFrom(cur.si || 0);
+  }
+  function speakFrom(k) {
+    if (!cur) return;
+    var p = parts()[cur.i];
+    if (k >= p.say.length) { ended(); return; }
+    cur.si = k;
+    var u = new SpeechSynthesisUtterance(p.say[k]), v = pickVoice(), token = {}, me = cur;
+    u.lang = v ? v.lang : (lang === "es" ? "es-MX" : "en-US"); if (v) u.voice = v; u.rate = rate;
+    cur.token = token;
+    var t0 = Date.now(), long = p.say[k].length > 20;
+    u.onend = function () {
+      if (!(cur === me && cur.token === token && cur.playing)) return;
+      // A sentence that "finishes" instantly means this phone has no voice for it: stop instead of racing through.
+      if (long && Date.now() - t0 < 120) { stop(); return; }
+      speakFrom(k + 1);
+    };
+    u.onerror = function () { if (cur === me && cur.token === token && cur.playing) stop(); };
+    synth.speak(u); paint();
+  }
+  function toggle() {
+    if (!cur) return;
+    if (cur.mode === "file" && cur.loading) { cur.playing = !cur.playing; }
+    else if (cur.mode === "file") {
+      if (audio.paused) { cur.playing = true; var pr = audio.play(); if (pr && pr.catch) pr.catch(function () {}); }
+      else { cur.playing = false; audio.pause(); }
+    } else if (cur.mode === "tts") {
+      if (cur.playing) { cur.playing = false; cur.token = null; synth.cancel(); }
+      else { cur.playing = true; speakFrom(cur.si); }
+    }
+    paint();
+  }
+  function ended() {
+    if (!cur) return;
+    if (cur.i + 1 < parts().length) { var n = cur.i + 1; start(n); var el = $("part-" + n); if (el) el.scrollIntoView({ behavior: "smooth", block: "start" }); }
+    else stop();
+  }
+  function stop() { silence(); cur = null; paint(); }
+  function step(d) { if (!cur) return; var n = cur.i + d; if (n < 0 || n >= parts().length) return; start(n); var el = $("part-" + n); if (el) el.scrollIntoView({ behavior: "smooth", block: "start" }); }
+
+  audio.addEventListener("ended", function () { if (cur && cur.mode === "file" && !cur.loading) ended(); });
+  audio.addEventListener("error", function () { if (cur && cur.mode === "file" && !cur.loading) { cur.si = 0; useVoice(); } });
+  audio.addEventListener("play", function () { if (cur && cur.mode === "file" && !cur.loading) { cur.playing = true; paint(); } });
+  audio.addEventListener("pause", function () { if (cur && cur.mode === "file" && !cur.loading && !audio.ended) { cur.playing = false; paint(); } });
+  audio.addEventListener("timeupdate", tick);
+  audio.addEventListener("loadedmetadata", tick);
+  try {
+    if ("mediaSession" in navigator) {
+      navigator.mediaSession.setActionHandler("play", function () { if (cur && !cur.playing) toggle(); });
+      navigator.mediaSession.setActionHandler("pause", function () { if (cur && cur.playing) toggle(); });
+      navigator.mediaSession.setActionHandler("nexttrack", function () { step(1); });
+      navigator.mediaSession.setActionHandler("previoustrack", function () { step(-1); });
+    }
+  } catch (e) {}
+
+  function tick() {
+    if (!cur) return;
+    var p = parts()[cur.i], seek = $("seek");
+    if (cur.mode === "file" && cur.loading) {
+      $("pTime").textContent = "… / " + clock(p.dur || 0); seek.disabled = true; seek.value = 0;
+    } else if (cur.mode === "file") {
+      var d = isFinite(audio.duration) && audio.duration ? audio.duration : (p.dur || 0);
+      $("pTime").textContent = clock(audio.currentTime) + " / " + clock(d);
+      seek.disabled = !d; if (d && !seek.matches(":active")) seek.value = Math.round(audio.currentTime / d * 1000);
+    } else {
+      $("pTime").textContent = T[lang].phoneVoice + " · " + (cur.si + 1) + "/" + p.say.length;
+      seek.disabled = true; seek.value = Math.round(cur.si / p.say.length * 1000);
+    }
+  }
+  function paint() {
+    var t = T[lang], pl = $("player");
+    var here = cur && cur.id === viewId;
+    pl.hidden = !cur;
+    document.body.classList.toggle("has-player", !!cur);
+    var secs = app.querySelectorAll(".part");
+    for (var i = 0; i < secs.length; i++) {
+      var on = here && cur.i === i;
+      secs[i].classList.toggle("is-playing", !!on);
+      var b = secs[i].querySelector(".listen");
+      if (b) b.innerHTML = (on && cur.playing ? ICON.pause.replace(/26/g, "20") : ICON.ear) + "<span>" + (on && cur.playing ? t.pause : t.listen) + "</span>";
+    }
+    var tocs = app.querySelectorAll(".toc button");
+    for (var k = 0; k < tocs.length; k++) tocs[k].classList.toggle("on", !!(here && cur.i === k));
+    if (!cur) return;
+    var ps = parts();
+    $("pTitle").textContent = (cur.i + 1) + ". " + ps[cur.i].h;
+    $("bPlay").innerHTML = cur.playing ? ICON.pause : ICON.play;
+    $("bPlay").setAttribute("aria-label", cur.playing ? t.pause : t.play);
+    $("bPrev").disabled = cur.i === 0; $("bNext").disabled = cur.i >= ps.length - 1;
+    $("bPrev").setAttribute("aria-label", t.prev); $("bNext").setAttribute("aria-label", t.next);
+    $("bStop").setAttribute("aria-label", t.stop); $("seek").setAttribute("aria-label", t.pos);
+    $("bRate").textContent = rate + "×"; $("bRate").setAttribute("aria-label", t.speed + " " + rate + "×");
+    tick();
+  }
+
+  /* ---------- events ---------- */
+  document.addEventListener("click", function (e) {
+    var el = e.target.closest ? e.target.closest("[data-lang],[data-play],[data-go],[data-key],[data-retry],[data-off]") : null;
+    if (!el) return;
+    if (el.hasAttribute("data-off")) { saveAudio(lang); return; }
+    if (el.hasAttribute("data-key")) { pressKey(el.getAttribute("data-key")); return; }
+    if (el.hasAttribute("data-retry")) { loadAccess(); return; }
+    if (el.hasAttribute("data-lang")) {
+      var l = el.getAttribute("data-lang"); if (l === lang) return;
+      stop(); lang = l; store("sop-lang", lang); route(true); return;
+    }
+    if (el.hasAttribute("data-play")) {
+      var i = parseInt(el.getAttribute("data-play"), 10);
+      if (cur && cur.id === viewId && cur.i === i && !el.hasAttribute("data-main")) toggle(); else start(i);
+      return;
+    }
+    if (el.hasAttribute("data-go")) {
+      var gi = parseInt(el.getAttribute("data-go"), 10), s = $("part-" + gi);
+      // While the player is open, picking a part in the list moves the sound there too.
+      if (cur && cur.id === viewId && cur.i !== gi) start(gi);
+      if (s) s.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  });
+  $("bPlay").addEventListener("click", toggle);
+  $("bPrev").addEventListener("click", function () { step(-1); });
+  $("bNext").addEventListener("click", function () { step(1); });
+  $("bStop").addEventListener("click", stop);
+  $("bRate").addEventListener("click", function () {
+    rate = RATES[(RATES.indexOf(rate) + 1) % RATES.length]; store("sop-rate", String(rate));
+    audio.playbackRate = rate; paint();
+  });
+  $("seek").addEventListener("input", function () {
+    if (cur && cur.mode === "file" && isFinite(audio.duration) && audio.duration) audio.currentTime = this.value / 1000 * audio.duration;
+  });
+  window.addEventListener("hashchange", function () { route(false); });
+  window.addEventListener("pagehide", silence);
+  if (synth && synth.addEventListener) synth.addEventListener("voiceschanged", function () {});
+
+  document.addEventListener("keydown", function (e) {
+    if (unlocked) return;
+    if (/^[0-9]$/.test(e.key)) pressKey(e.key); else if (e.key === "Backspace") pressKey("del");
+  });
+  document.addEventListener("submit", function (e) {
+    if (e.target && e.target.id === "codeForm") { e.preventDefault(); changeCode(($("newCode").value || "").trim()); }
+  });
+
+  route(true);
+  loadAccess();
+})();
+</script>
+
+<script>
+if ("serviceWorker" in navigator) addEventListener("load", function () { navigator.serviceWorker.register("sw.js").catch(function () {}); });
+</script>
+</body>
+</html>
